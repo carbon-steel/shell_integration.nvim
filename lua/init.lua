@@ -1,5 +1,5 @@
-local socket = vim.fn.startserver('127.0.0.1:')
-vim.env.SHELL_PRESERVE_SOCKET = socket
+local socket = vim.fn.serverstart('127.0.0.1:')
+vim.env.NVIM_SHELL_INTEGRATION = socket
 
 local using_windows = vim.loop.os_uname().sysname == "Windows_NT"
 local bin_dir = vim.fn.expand('%:p:h:h') .. "/bin"

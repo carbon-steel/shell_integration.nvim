@@ -4,7 +4,8 @@ function capture_output ()
 {
   local TEMP=$(mktemp)
   cat /dev/stdin > "$TEMP"
-  nvim --server "$(printenv SHELL_PRESERVE_SOCKET)" --remote-tab "$TEMP"
+  nvim --server "$(printenv NVIM_SHELL_INTEGRATION)" --remote-send "<C-\><C-N>:split<CR>"
+  nvim --server "$(printenv NVIM_SHELL_INTEGRATION)" --remote "$TEMP"
 }
 
 capture_output
