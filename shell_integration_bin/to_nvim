@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+
+set -e
+
+function capture_output ()
+{
+  nvim --server "$NVIM" --remote-send "<C-\><C-N>:split<CR>:enew<CR>"
+  local DATA_CHANNEL
+  DATA_CHANNEL=$(nvim --server "$NVIM" --remote-expr "g:shell_integration_data_channel")
+  echo "$DATA_CHANNEL"
+  cat /dev/stdin | nc -U "$DATA_CHANNEL"
+}
+
+capture_output
+
