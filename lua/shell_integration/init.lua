@@ -17,9 +17,4 @@ assert(bin_dir ~= "", "shell_integration_bin not found")
 local using_windows = vim.loop.os_uname().sysname == "Windows_NT"
 vim.env.PATH = vim.env.PATH .. (using_windows and ";" or ":") .. vim.fn.fnamemodify(bin_dir, ":p")
 
-M.from_socket = function (window)
-    vim.fn.win_gotoid(window)
-    vim.cmd.terminal("nc -Ul " .. vim.g.shell_integration_data_channel)
-end
-
 return M
