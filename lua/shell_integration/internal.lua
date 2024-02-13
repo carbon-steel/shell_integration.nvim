@@ -9,7 +9,9 @@ if pipe == nil then
     return
 end
 
-assert(pipe:bind('/tmp/sock.test'))
+local pipeName = vim.fn.tempname()
+
+assert(pipe:bind(pipeName))
 
 pipe:listen(128, function()
     local client, err_name, err_msg = uv.new_pipe(true)
@@ -25,10 +27,6 @@ pipe:listen(128, function()
         end
         if data then
             vim.schedule(function ()
-                local popup_id = require("detour").Detour()
-                if not popup_id then
-                    return
-                end
                 vim.cmd.enew()
                 local buf = vim.api.nvim_get_current_buf()
                 vim.api.nvim_buf_set_lines(buf, 0, -1, false, vim.split(data, "\n"))
@@ -44,6 +42,6 @@ end)
 --     callback = pipe:close
 -- })
 
--- vim.g.shell_integration_data_channel = vim.fn.serverstart('nvim_shell_integration')
+vim.env.SHELL_INTEGRATION_PIPE_NAME = pipeName
 
 return M

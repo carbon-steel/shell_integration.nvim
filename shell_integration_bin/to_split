@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+
+set -e
+
+function main ()
+{
+  nvim --server "$NVIM" --remote-send "<C-\><C-N><Cmd>split<CR>"
+  nc -U "$SHELL_INTEGRATION_PIPE_NAME"
+}
+
+main
